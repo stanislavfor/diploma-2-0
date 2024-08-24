@@ -1,0 +1,68 @@
+server:
+  port: 8084
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/images_db
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+  thymeleaf:
+    cache: false
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+  web:
+    resources:
+      chain:
+        strategy:
+          content:
+            enabled: true
+
+
+
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+
+
+  devtools:
+    restart:
+      enabled: true   # Включает автоматическую перезагрузку при изменении файлов
+      additional-paths:
+        - src/main/resources/static/images
+        - src/main/resources/templates
+        - uploads
+      exclude:
+        - src/main/resources/static/images
+        - src/main/resources/templates
+        - uploads
+    livereload:
+      enabled: true   # Включает LiveReload для автоматической перезагрузки страницы в браузере
+
+  resources:
+    static-locations:
+      - classpath:/static/images/          # Директория для статических изображений
+      - file:uploads/                      # Внешняя директория для загружаемых файлов
+      - classpath:/templates/              # Директория для шаблонов
+    chain:
+      cache:
+        period: 0s                         # Отключает кэширование для немедленного обновления файлов
+      strategy:
+        content:
+          enabled: true                    # Включает стратегию для обновления ресурсов при изменении их содержимого
