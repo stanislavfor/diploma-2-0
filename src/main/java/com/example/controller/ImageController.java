@@ -96,14 +96,12 @@ public class ImageController {
 
         // Удаление файла с использованием FileService
         boolean fileDeleted = fileService.deleteFile(filename);
-
         if (!fileDeleted) {
             return "redirect:/images?error=deletefile";
         }
 
         // Удаление записи из базы данных
         imageService.deleteItem(id);
-
         return "redirect:/images";
     }
 }

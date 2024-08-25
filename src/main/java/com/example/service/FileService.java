@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 public class FileService {
 
     private static final String UPLOAD_DIR = "src/main/resources/static/images";
+//    private static final String UPLOAD_DIR = "uploads/images";
 
     public boolean deleteFile(String filename) {
         Path filePath = Paths.get(UPLOAD_DIR, filename);

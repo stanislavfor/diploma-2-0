@@ -52,7 +52,7 @@ INSERT INTO users (login, password) VALUES
 
 ```
 
-## Thymeleaf шаблон страницы my-login.html
+## Thymeleaf шаблон страницы my-app.html
 
 ```html
 <!DOCTYPE html>
@@ -90,9 +90,9 @@ System.out.println(matches);
 
 ```
 
-## Страница авторизации (my-app.html):
+#### Страница авторизации (my-app.html):
 
-### URL: http://localhost:8084/my-app
+URL: http://localhost:8084/my-app <br>
 Это страница, на которой пользователи могут ввести свои логин и пароль для входа в систему.
 
 
