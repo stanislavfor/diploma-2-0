@@ -551,7 +551,8 @@
     <div class="gallery">
         <div class="gallery-item" th:each="item : ${images}"><img alt="image"
                                                                   src="https://i.ibb.co/YpkXDjH/img-200x200.jpg"
-                                                                  th:src="@{{link}(link=${item.link})}">
+                                                                  th:src="@{/images/{file}(file=${item.link})}
+            ">
             <p th:text="${item.id}">10</p>
             <p th:text="${item.name}">image-name</p>
             <p th:text="${item.description}">image-description</p>

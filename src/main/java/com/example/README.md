@@ -19,7 +19,7 @@ spring:
 
 Создание базы данных и таблиц в PostgreSQL:
 
-```sql
+```
 -- Создать базу данных
 CREATE DATABASE images_db;
 
@@ -44,7 +44,7 @@ CREATE TABLE item (
 ```
 
 Добавление значений в Таблицу 'users'
-```sql
+```
 INSERT INTO users (login, password) VALUES
 ('admin', '$2a$12$LbAPCsHn8ZN5MUDqDmIX7e9n1YlDkCxEt0lW3Q2WuW0M1vteo8jvG'),  -- пароль зашифрован
 ('user', '$2a$12$.dlnBAYq6sOUumn3jtG.AepxdSwGxJ8xA2iAPoCHSH61Vjl.JbIfq')   -- пароль зашифрован

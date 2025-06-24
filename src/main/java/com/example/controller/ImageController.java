@@ -3,7 +3,9 @@ package com.example.controller;
 import com.example.model.Item;
 import com.example.service.FileService;
 import com.example.service.ImageService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +36,9 @@ public class ImageController {
         return "index";
     }
 
+    @Value("${upload.path}")
+    private String uploadDir;
+
     @PostMapping("/add")
     public String addFile(@RequestParam("file") MultipartFile file,
                           @RequestParam("description") String description,
@@ -42,40 +47,68 @@ public class ImageController {
             return "redirect:/images?error=emptyfile";
         }
 
-        String filename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-        Path filePath = Paths.get(UPLOAD_DIR, filename);
+        String filename = UUID.randomUUID() + "_" + file.getOriginalFilename();
+        Path uploadPath = Paths.get(uploadDir);
 
-        // Создание директории для изображения, если она не создана
-        if (!Files.exists(Paths.get(UPLOAD_DIR))) {
-            Files.createDirectories(Paths.get(UPLOAD_DIR));
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
         }
 
-        // Запись файла в файловую систему
+        Path filePath = uploadPath.resolve(filename);
         Files.write(filePath, file.getBytes());
 
-        // Создание ссылки на изображение
-        String link = "/images/" + filename;
-
-        // Создание нового элемента Item и сохранение в базу данных
         Item item = new Item();
         item.setName(name);
         item.setDescription(description);
-        item.setLink(link);
+        item.setLink(filename); // только имя файла
         imageService.saveItem(item);
 
         return "redirect:/images";
     }
 
-    @GetMapping("/edit/{id}")
-    public String editItem(@PathVariable("id") Long id, Model model) {
-        Item item = imageService.getAllItems().stream()
-                .filter(i -> i.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Invalid item ID: " + id));
 
-        model.addAttribute("item", item);
-        return "edit-item";
-    }
+//    @PostMapping("/add")
+//    public String addFile(@RequestParam("file") MultipartFile file,
+//                          @RequestParam("description") String description,
+//                          @RequestParam("name") String name) throws IOException {
+//        if (file.isEmpty()) {
+//            return "redirect:/images?error=emptyfile";
+//        }
+//
+//        String filename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+//        Path filePath = Paths.get(UPLOAD_DIR, filename);
+//
+//        // Создание директории для изображения, если она не создана
+//        if (!Files.exists(Paths.get(UPLOAD_DIR))) {
+//            Files.createDirectories(Paths.get(UPLOAD_DIR));
+//        }
+//
+//        // Запись файла в файловую систему
+//        Files.write(filePath, file.getBytes());
+//
+//        // Создание ссылки на изображение
+//        String link = "/images/" + filename;
+//
+//        // Создание нового элемента Item и сохранение в базу данных
+//        Item item = new Item();
+//        item.setName(name);
+//        item.setDescription(description);
+//        item.setLink(link);
+//        imageService.saveItem(item);
+//
+//        return "redirect:/images";
+//    }
+//
+//    @GetMapping("/edit/{id}")
+//    public String editItem(@PathVariable("id") Long id, Model model) {
+//        Item item = imageService.getAllItems().stream()
+//                .filter(i -> i.getId().equals(id))
+//                .findFirst()
+//                .orElseThrow(() -> new IllegalArgumentException("Invalid item ID: " + id));
+//
+//        model.addAttribute("item", item);
+//        return "edit-item";
+//    }
 
     @PostMapping("/edit/{id}")
     public String updateItem(@PathVariable Long id, Item item) {

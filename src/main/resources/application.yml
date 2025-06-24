@@ -2,6 +2,8 @@ server:
   port: 8084
 
 spring:
+  application:
+    name: diploma-2-0
   datasource:
     url: jdbc:postgresql://localhost:5432/images_db
     username: postgres
@@ -32,7 +34,8 @@ spring:
           content:
             enabled: true
 
-
+upload:
+  path: target/uploads/images
 
 logging:
   level:
@@ -45,24 +48,26 @@ logging:
     restart:
       enabled: true   # Включает автоматическую перезагрузку при изменении файлов
       additional-paths:
-        - src/main/resources/static/images
-        - src/main/resources/templates
-        - uploads
+        - target/uploads/images
+#        - src/main/resources/static/images
+#        - src/main/resources/templates
+#        - uploads
       exclude:
-        - src/main/resources/static/images
-        - src/main/resources/templates
-        - uploads
+        - static/**
+#        - src/main/resources/static/images
+#        - src/main/resources/templates
+#        - uploads
     livereload:
       enabled: true   # Включает LiveReload для автоматической перезагрузки страницы в браузере
 
-  resources:
-    static-locations:
-      - classpath:/static/images/          # Директория для статических изображений
-      - file:uploads/                      # Внешняя директория для загружаемых файлов
-      - classpath:/templates/              # Директория для шаблонов
-    chain:
-      cache:
-        period: 0s                         # Отключает кэширование для немедленного обновления файлов
-      strategy:
-        content:
-          enabled: true                    # Включает стратегию для обновления ресурсов при изменении их содержимого
+#  resources:
+#    static-locations:
+#      - classpath:/static/images/          # Директория для статических изображений
+#      - file:uploads/                      # Внешняя директория для загружаемых файлов
+#      - classpath:/templates/              # Директория для шаблонов
+#    chain:
+#      cache:
+#        period: 0s                         # Отключает кэширование для немедленного обновления файлов
+#      strategy:
+#        content:
+#          enabled: true                    # Включает стратегию для обновления ресурсов при изменении их содержимого
