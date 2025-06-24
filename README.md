@@ -73,10 +73,10 @@ VALUES ('admin', '$2a$12$LbAPCsHn8ZN5MUDqDmIX7e9n1YlDkCxEt0lW3Q2WuW0M1vteo8jvG')
 #### Страница авторизации
 
 Это страница, на которой пользователи могут ввести свои логин и пароль для входа в систему.<br>
-URL: http://localhost:8084/my-app
+my-app.html
 
 ## Главная страница (index.html):
 
-### URL: http://localhost:8084/images
+### URL: http://localhost:8084/
 
 <br><br>
