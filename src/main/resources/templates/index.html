@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Images Hosting</title>
 
-    <link rel="icon" th:href="@{src/main/resources/static/favicon.ico}" sizes="any" type="image/x-icon">
+<!--    <link rel="icon" th:href="@{src/main/resources/static/favicon.ico}" sizes="any" type="image/x-icon">-->
+    <link rel="icon" th:href="@{/favicon.ico}" sizes="any" type="image/x-icon">
     <style>
         body {
             margin: 0;
@@ -469,97 +470,96 @@
             color: grey;
             transition: color 0.6s ease, box-shadow 0.3s ease;
         }
+
     </style>
 </head>
 
 <body>
-<div class="container">
-    <div class="header" id="header">
-        <div class="site-name">Images Hosting<span class="header-name">Хостинг Картинок (изображений)</span></div>
-        <div class="header-logo">
-            <a href="#gallery-headline" class="smooth-scroll">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="50" height="50">
-                    <!-- Квадрат -->
-                    <rect x="10" y="10" width="80" height="80" fill="none" stroke="black" stroke-width="6"/>
-                    <!-- Усеченная правая сторона -->
-                    <polygon points="90,10 90,90 70,90" fill="white" stroke="black" stroke-width="4"/>
-                    <!-- Иконка изображения (упрощенная версия) -->
-                    <polyline points="25,65 35,55 50,70 65,45 85,75" fill="none" stroke="black" stroke-width="4"/>
-                    <circle cx="35" cy="35" r="5" fill="black"/>
-                </svg>
-            </a>
-        </div>
-    </div>
-    <div class="section" id="section-form">
-        <div class="main">
-            <div class="container-wrap">
-                <div class="container-form">
-                    <form class="form" th:action="@{/images/add}" method="post" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label for="name">Название:</label>
-                            <input type="text" id="name" name="name" required></div>
-                        <div class="form-group">
-                            <label for="description">Описание Изображения:</label>
-                            <textarea id="description" name="description" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="file">Выберите файл Изображения:</label>
-                            <input type="file" id="file" name="file" accept="image/*" required></div>
-                        <button type="submit" class="button">Post</button>
-                    </form>
-                </div>
+    <div class="container">
+        <div class="header" id="header">
+            <div class="site-name">Images Hosting<span class="header-name">Хостинг Картинок (изображений)</span></div>
+            <div class="header-logo">
+                <a href="#gallery-headline" class="smooth-scroll">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="50" height="50">
+                        <!-- Квадрат -->
+                        <rect x="10" y="10" width="80" height="80" fill="none" stroke="black" stroke-width="6" />
+                        <!-- Усеченная правая сторона -->
+                        <polygon points="90,10 90,90 70,90" fill="white" stroke="black" stroke-width="4" />
+                        <!-- Иконка изображения (упрощенная версия) -->
+                        <polyline points="25,65 35,55 50,70 65,45 85,75" fill="none" stroke="black" stroke-width="4" />
+                        <circle cx="35" cy="35" r="5" fill="black" />
+                    </svg>
+                </a>
             </div>
         </div>
-    </div>
-    <div class="tariff" id="tariffs">
-        <h2 class="headline">Тарифы Хостинга Изображений</h2>
-        <div class="tariff-container">
-            <div class="tariff-wrap">
-                <h2>Тариф : Free</h2>
-                <div class="description">
-                    <p>Бесплатная загрузка до 15 изображений.</p>
-                    <p>Прямые ссылки на изображения.</p>
-                    <p>Ограниченный размер файла - до 2MB.</p>
-                    <p>Поддержка через форум.</p>
+        <div class="section" id="section-form">
+            <div class="main">
+                <div class="container-wrap">
+                    <div class="container-form">
+                        <form class="form" th:action="@{/images/add}" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="name">Название:</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Описание Изображения:</label>
+                                <textarea id="description" name="description" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="file">Выберите файл Изображения:</label>
+                                <input type="file" id="file" name="file" accept="image/*" required>
+                            </div>
+                            <button type="submit" class="button">Post</button>
+                        </form>
+                    </div>
                 </div>
-                <button class="button" onclick="window.location.href='/images/email-page'">Подробно</button>
-            </div>
-            <div class="tariff-wrap">
-                <h2>Тариф : Standard</h2>
-                <div class="description">
-                    <p>Загрузка до 50 изображений.</p>
-                    <p>Прямые ссылки на изображения.</p>
-                    <p>Ограниченный размер файла - до 5MB.</p>
-                    <p>Поддержка через email.</p>
-                </div>
-                <button class="button" onclick="window.location.href='/images/email-page'">Подробно</button>
-            </div>
-            <div class="tariff-wrap">
-                <h2>Тариф : Premium</h2>
-                <div class="description">
-                    <p>Неограниченная загрузка изображений.</p>
-                    <p>Прямые ссылки на изображения.</p>
-                    <p>Ограниченный размер файла - до 10MB.</p>
-                    <p>Приоритетная поддержка 24/7.</p>
-                </div>
-                <button class="button" onclick="window.location.href='/images/email-page'">Подробно</button>
             </div>
         </div>
-    </div>
-    <h2 class="headline" id="gallery-headline">Галерея изображений</h2>
+        <div class="tariff" id="tariffs">
+            <h2 class="headline">Тарифы Хостинга Изображений</h2>
+            <div class="tariff-container">
+                <div class="tariff-wrap">
+                    <h2>Тариф : Free</h2>
+                    <div class="description">
+                        <p>Бесплатная загрузка до 15 изображений.</p>
+                        <p>Прямые ссылки на изображения.</p>
+                        <p>Ограниченный размер файла - до 2MB.</p>
+                        <p>Поддержка через форум.</p>
+                    </div>
+                    <button class="button" onclick="window.location.href='/images/email-page'">Подробно</button>
+                </div>
+                <div class="tariff-wrap">
+                    <h2>Тариф : Standard</h2>
+                    <div class="description">
+                        <p>Загрузка до 50 изображений.</p>
+                        <p>Прямые ссылки на изображения.</p>
+                        <p>Ограниченный размер файла - до 5MB.</p>
+                        <p>Поддержка через email.</p>
+                    </div>
+                    <button class="button" onclick="window.location.href='/images/email-page'">Подробно</button>
+                </div>
+                <div class="tariff-wrap">
+                    <h2>Тариф : Premium</h2>
+                    <div class="description">
+                        <p>Неограниченная загрузка изображений.</p>
+                        <p>Прямые ссылки на изображения.</p>
+                        <p>Ограниченный размер файла - до 10MB.</p>
+                        <p>Приоритетная поддержка 24/7.</p>
+                    </div>
+                    <button class="button" onclick="window.location.href='/images/email-page'">Подробно</button>
+                </div>
+            </div>
+        </div>
+        <h2 class="headline" id="gallery-headline">Галерея изображений</h2>
 
-    <div class="gallery">
-        <div class="gallery-item" th:each="item : ${images}"><img alt="image"
-                                                                  src="https://i.ibb.co/YpkXDjH/img-200x200.jpg"
-                                                                  th:src="@{/images/{file}(file=${item.link})}
-            ">
-            <p th:text="${item.id}">10</p>
-            <p th:text="${item.name}">image-name</p>
-            <p th:text="${item.description}">image-description</p>
-            <p th:text="${item.link}">https://i.ibb.co/YpkXDjH/img-200x200.jpg</p>
-            <button class="button" th:onclick="|window.open('@{{link}(link=${item.link})}', '_blank')|">Открыть во
-                вкладке
-            </button>
+        <div class="gallery">
+            <div class="gallery-item" th:each="item : ${images}">
+                <img alt="image" src="https://i.ibb.co/YpkXDjH/img-200x200.jpg" th:src="@{/images/{filename}(filename=${item.link})}">
+                <p th:text="${item.id}">10</p>
+                <p th:text="${item.name}">image-name</p>
+                <p th:text="${item.description}">image-description</p>
+                <p th:text="${item.link}">https://i.ibb.co/YpkXDjH/img-200x200.jpg</p>
+                <button class="button" th:onclick="|window.open('/images/@{{link}(link=${item.link})}', '_blank')|">Открыть во вкладке</button>
             <form th:action="@{/images/edit/{id}(id=${item.id})}" method="get">
                 <button type="submit" class="button">Редактировать</button>
             </form>

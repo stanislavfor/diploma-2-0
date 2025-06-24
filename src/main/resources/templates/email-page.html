@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -85,39 +86,39 @@
 </head>
 
 <body>
-<div class="container">
-    <div class="text-block">
-        <h2>Здравствуйте!</h2>
-        <br>
-        <p>Наш Хостинг изображений предлагает удобные тарифы и сервисы для работы с файлами изображений.</p>
-        <p>Мы хотели бы узнать, какой тариф хостинга изображений вас интересует. Пожалуйста, отправьте нам сообщение, и
-            мы вышлем вам подробный список услуг и тарифов.</p>
-        <p>Если у вас вопросы по работе сервиса или вы имеете рекомендацию, предложение по развитию Хостинга,
-            пожалуйста, оставьте свои контактные данные, мы свяжемся с вами указанным способом для уточнения
-            вопросов.</p>
-        <h3>Спасибо за проявленный интерес!</h3>
-        <form action="../images#tariffs" target="_self" style="margin-top: 5px;">
-            <button class="email-button">на Главную</button>
-        </form>
+    <div class="container">
+        <div class="text-block">
+            <h2>Здравствуйте!</h2>
+            <br>
+            <p>Наш Хостинг изображений предлагает удобные тарифы и сервисы для работы с файлами изображений.</p>
+            <p>Мы хотели бы узнать, какой тариф хостинга изображений вас интересует. Пожалуйста, отправьте нам сообщение, и
+                мы вышлем вам подробный список услуг и тарифов.</p>
+            <p>Если у вас вопросы по работе сервиса или вы имеете рекомендацию, предложение по развитию Хостинга,
+                пожалуйста, оставьте свои контактные данные, мы свяжемся с вами указанным способом для уточнения
+                вопросов.</p>
+            <h3>Спасибо за проявленный интерес!</h3>
+            <form action="../#tariffs" target="_self" style="margin-top: 5px;">
+                <button class="email-button">на Главную</button>
+            </form>
 
+        </div>
+        <div class="form-block">
+            <h2>Отправьте сообщение</h2>
+            <form action="/sendEmail" method="post">
+                <label for="username">Ваше Имя:</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="message">Ваше сообщение:</label>
+                <textarea id="message" name="message" rows="7" required></textarea>
+
+                <button type="reset" class="email-button">Reset</button>
+                <button type="submit" class="email-button">Send</button>
+            </form>
+        </div>
     </div>
-    <div class="form-block">
-        <h2>Отправьте сообщение</h2>
-        <form action="/images/sendEmail" method="post">
-            <label for="username">Ваше Имя:</label>
-            <input type="text" id="username" name="username" required>
-
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-
-            <label for="message">Ваше сообщение:</label>
-            <textarea id="message" name="message" rows="7" required></textarea>
-
-            <button type="reset" class="email-button">Reset</button>
-            <button type="submit" class="email-button">Send</button>
-        </form>
-    </div>
-</div>
 </body>
 
 </html>

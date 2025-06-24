@@ -18,7 +18,7 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/images")
+@RequestMapping("/")
 public class ImageController {
 
     @Autowired
@@ -28,7 +28,7 @@ public class ImageController {
     private FileService fileService;
 
     // Путь к директории изображений
-    private static final String UPLOAD_DIR = "src/main/resources/static/images";
+//    private static final String UPLOAD_DIR = "target/uploads/images";
 
     @GetMapping
     public String viewHomePage(Model model) {
@@ -39,7 +39,7 @@ public class ImageController {
     @Value("${upload.path}")
     private String uploadDir;
 
-    @PostMapping("/add")
+    @PostMapping("/images/add")
     public String addFile(@RequestParam("file") MultipartFile file,
                           @RequestParam("description") String description,
                           @RequestParam("name") String name) throws IOException {
@@ -60,63 +60,31 @@ public class ImageController {
         Item item = new Item();
         item.setName(name);
         item.setDescription(description);
-        item.setLink(filename); // только имя файла
+        item.setLink(filename); // <имя файла>
         imageService.saveItem(item);
 
-        return "redirect:/images";
+        return "redirect:/#gallery-headline";
     }
 
 
-//    @PostMapping("/add")
-//    public String addFile(@RequestParam("file") MultipartFile file,
-//                          @RequestParam("description") String description,
-//                          @RequestParam("name") String name) throws IOException {
-//        if (file.isEmpty()) {
-//            return "redirect:/images?error=emptyfile";
-//        }
-//
-//        String filename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-//        Path filePath = Paths.get(UPLOAD_DIR, filename);
-//
-//        // Создание директории для изображения, если она не создана
-//        if (!Files.exists(Paths.get(UPLOAD_DIR))) {
-//            Files.createDirectories(Paths.get(UPLOAD_DIR));
-//        }
-//
-//        // Запись файла в файловую систему
-//        Files.write(filePath, file.getBytes());
-//
-//        // Создание ссылки на изображение
-//        String link = "/images/" + filename;
-//
-//        // Создание нового элемента Item и сохранение в базу данных
-//        Item item = new Item();
-//        item.setName(name);
-//        item.setDescription(description);
-//        item.setLink(link);
-//        imageService.saveItem(item);
-//
-//        return "redirect:/images";
-//    }
-//
-//    @GetMapping("/edit/{id}")
-//    public String editItem(@PathVariable("id") Long id, Model model) {
-//        Item item = imageService.getAllItems().stream()
-//                .filter(i -> i.getId().equals(id))
-//                .findFirst()
-//                .orElseThrow(() -> new IllegalArgumentException("Invalid item ID: " + id));
-//
-//        model.addAttribute("item", item);
-//        return "edit-item";
-//    }
+    @GetMapping("/images/edit/{id}")
+    public String editItem(@PathVariable("id") Long id, Model model) {
+        Item item = imageService.getAllItems().stream()
+                .filter(i -> i.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Invalid item ID: " + id));
 
-    @PostMapping("/edit/{id}")
+        model.addAttribute("item", item);
+        return "edit-item";
+    }
+
+    @PostMapping("/images/edit/{id}")
     public String updateItem(@PathVariable Long id, Item item) {
         imageService.saveItem(item);
-        return "redirect:/images";
+        return "redirect:/#gallery-headline";
     }
 
-    @PostMapping("/delete/{id}")
+    @PostMapping("/images/delete/{id}")
     public String deleteItem(@PathVariable("id") Long id) {
         // Получаем элемент из базы данных
         Item item = imageService.getAllItems().stream()
@@ -125,7 +93,9 @@ public class ImageController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid item ID: " + id));
 
         // Извлечение имени файла из ссылки на изображение
-        String filename = item.getLink().substring(item.getLink().lastIndexOf("/") + 1);
+//        String filename = item.getLink().substring(item.getLink().lastIndexOf("/") + 1);
+
+        String filename = Paths.get(item.getLink()).getFileName().toString();
 
         // Удаление файла с использованием FileService
         boolean fileDeleted = fileService.deleteFile(filename);
@@ -135,7 +105,7 @@ public class ImageController {
 
         // Удаление записи из базы данных
         imageService.deleteItem(id);
-        return "redirect:/images";
+        return "redirect:/#gallery-headline";
     }
 }
 
