@@ -1,9 +1,8 @@
 package com.example.controller;
 
-import com.example.model.Item;
 import com.example.service.FileService;
 import com.example.service.ImageService;
-
+import com.example.model.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -27,8 +26,8 @@ public class ImageController {
     @Autowired
     private FileService fileService;
 
-    // Путь к директории изображений
-//    private static final String UPLOAD_DIR = "target/uploads/images";
+    @Value("${file.upload-dir}")
+    private String uploadDir;
 
     @GetMapping
     public String viewHomePage(Model model) {
@@ -36,77 +35,42 @@ public class ImageController {
         return "index";
     }
 
-    @Value("${upload.path}")
-    private String uploadDir;
-
     @PostMapping("/images/add")
     public String addFile(@RequestParam("file") MultipartFile file,
                           @RequestParam("description") String description,
-                          @RequestParam("name") String name) throws IOException {
+                          @RequestParam("name") String name, Model model) throws IOException {
+        // Проверка на пустой файл
         if (file.isEmpty()) {
-            return "redirect:/images?error=emptyfile";
+            model.addAttribute("error", "Файл не выбран!");
+            return "redirect:/#gallery-headline";
         }
 
+        // Генерация уникального имени для файла
         String filename = UUID.randomUUID() + "_" + file.getOriginalFilename();
         Path uploadPath = Paths.get(uploadDir);
 
+        // Создание директории, если она не существует
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
         }
 
+        // Путь для сохранения файла
         Path filePath = uploadPath.resolve(filename);
         Files.write(filePath, file.getBytes());
 
+        // Создание объекта изображения
         Item item = new Item();
         item.setName(name);
         item.setDescription(description);
-        item.setLink(filename); // <имя файла>
+        item.setLink(filename); // Ссылка на файл
+
+        // Сохранение изображения в базу данных
         imageService.saveItem(item);
 
-        return "redirect:/#gallery-headline";
-    }
+        // Обновление модели с новыми изображениями
+        model.addAttribute("images", imageService.getAllItems());
 
-
-    @GetMapping("/images/edit/{id}")
-    public String editItem(@PathVariable("id") Long id, Model model) {
-        Item item = imageService.getAllItems().stream()
-                .filter(i -> i.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Invalid item ID: " + id));
-
-        model.addAttribute("item", item);
-        return "edit-item";
-    }
-
-    @PostMapping("/images/edit/{id}")
-    public String updateItem(@PathVariable Long id, Item item) {
-        imageService.saveItem(item);
-        return "redirect:/#gallery-headline";
-    }
-
-    @PostMapping("/images/delete/{id}")
-    public String deleteItem(@PathVariable("id") Long id) {
-        // Получаем элемент из базы данных
-        Item item = imageService.getAllItems().stream()
-                .filter(i -> i.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Invalid item ID: " + id));
-
-        // Извлечение имени файла из ссылки на изображение
-//        String filename = item.getLink().substring(item.getLink().lastIndexOf("/") + 1);
-
-        String filename = Paths.get(item.getLink()).getFileName().toString();
-
-        // Удаление файла с использованием FileService
-        boolean fileDeleted = fileService.deleteFile(filename);
-        if (!fileDeleted) {
-            return "redirect:/images?error=deletefile";
-        }
-
-        // Удаление записи из базы данных
-        imageService.deleteItem(id);
+        // Перенаправление на галерею изображений
         return "redirect:/#gallery-headline";
     }
 }
-
-

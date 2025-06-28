@@ -34,8 +34,10 @@ spring:
           content:
             enabled: true
 
-upload:
-  path: uploads/images
+  file:
+    upload-dir: ${USER_HOME}/uploads/images
+
+
 
 logging:
   level:
@@ -46,28 +48,8 @@ logging:
 
   devtools:
     restart:
-      enabled: true   # Включает автоматическую перезагрузку при изменении файлов
+      enabled: true
       additional-paths:
-        - target/uploads/images
-#        - src/main/resources/static/images
-#        - src/main/resources/templates
-#        - uploads
-      exclude:
-        - static/**
-#        - src/main/resources/static/images
-#        - src/main/resources/templates
-#        - uploads
-    livereload:
-      enabled: true   # Включает LiveReload для автоматической перезагрузки страницы в браузере
-
-#  resources:
-#    static-locations:
-#      - classpath:/static/images/          # Директория для статических изображений
-#      - file:uploads/                      # Внешняя директория для загружаемых файлов
-#      - classpath:/templates/              # Директория для шаблонов
-#    chain:
-#      cache:
-#        period: 0s                         # Отключает кэширование для немедленного обновления файлов
-#      strategy:
-#        content:
-#          enabled: true                    # Включает стратегию для обновления ресурсов при изменении их содержимого
+        - uploads/images
+        - src/main/resources/static/images
+        - src/main/resources/templates
