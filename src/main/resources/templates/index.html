@@ -526,7 +526,7 @@
                         <p>Ограниченный размер файла - до 2MB.</p>
                         <p>Поддержка через форум.</p>
                     </div>
-                    <button class="button" onclick="window.location.href='/images/email-page'">Подробно</button>
+                    <button class="button" onclick="window.location.href='/email-page'">Подробно</button>
                 </div>
                 <div class="tariff-wrap">
                     <h2>Тариф : Standard</h2>
@@ -536,7 +536,7 @@
                         <p>Ограниченный размер файла - до 5MB.</p>
                         <p>Поддержка через email.</p>
                     </div>
-                    <button class="button" onclick="window.location.href='/images/email-page'">Подробно</button>
+                    <button class="button" onclick="window.location.href='/email-page'">Подробно</button>
                 </div>
                 <div class="tariff-wrap">
                     <h2>Тариф : Premium</h2>
@@ -546,7 +546,7 @@
                         <p>Ограниченный размер файла - до 10MB.</p>
                         <p>Приоритетная поддержка 24/7.</p>
                     </div>
-                    <button class="button" onclick="window.location.href='/images/email-page'">Подробно</button>
+                    <button class="button" onclick="window.location.href='/email-page'">Подробно</button>
                 </div>
             </div>
         </div>
@@ -560,13 +560,14 @@
                 <p th:text="${item.description}">image-description</p>
                 <p th:text="${item.link}">https://i.ibb.co/YpkXDjH/img-200x200.jpg</p>
                 <button class="button" th:onclick="|window.open('/images/@{{link}(link=${item.link})}', '_blank')|">Открыть во вкладке</button>
-            <form th:action="@{/images/edit/{id}(id=${item.id})}" method="get">
-                <button type="submit" class="button">Редактировать</button>
-            </form>
-            <form method="post" th:action="@{/images/delete/{id}(id=${item.id})}">
-                <button type="submit" class="button">Удалить</button>
-            </form>
-        </div>
+                <form th:action="@{/images/edit/{id}(id=${item.id})}" method="get">
+                    <button type="submit" class="button">Редактировать</button>
+                </form>
+                <form method="post" th:action="@{/images/delete/{id}(id=${item.id})}">
+                    <button type="submit" class="button">Удалить</button>
+                </form>
+
+            </div>
     </div>
     <div class="container-wrap">
         <div class="rules">
@@ -635,7 +636,7 @@
         </div>
         <div class="footer-contacts">
             <h4>Контакты :</h4>
-            <button class="footer_button" onclick="window.location.href='/images/email-page'">Отправить Email</button>
+            <button class="footer_button" onclick="window.location.href='/email-page'">Отправить Email</button>
             <!--                <a href='/images/email-page' class="smooth-scroll" target="_self"><p>Отправить сообщение</p>></a>-->
         </div>
     </div>

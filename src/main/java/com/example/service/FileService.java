@@ -10,14 +10,11 @@ import java.nio.file.Paths;
 @Service
 public class FileService {
 
-//    private static final String UPLOAD_DIR = "src/main/resources/static/images";
-//    private static final String UPLOAD_DIR = "uploads/images";
-
-    @Value("${upload.path}")
+    @Value("${upload.path}") // путь указан в application.properties
     private String uploadDir;
+
     public boolean deleteFile(String filename) {
-//        Path filePath = Paths.get(UPLOAD_DIR, filename);
-        Path filePath = Paths.get(uploadDir).resolve(filename);
+        Path filePath = Paths.get(uploadDir, filename);
 
         try {
             return Files.deleteIfExists(filePath);

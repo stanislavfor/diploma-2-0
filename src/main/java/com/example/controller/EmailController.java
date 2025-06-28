@@ -20,12 +20,12 @@ public class EmailController {
         this.emailService = emailService;
     }
 
-    @GetMapping("/images/email-page")
+    @GetMapping("/email-page")
     public String showForm() {
         return "email-page";
     }
 
-    @PostMapping("/images/sendEmail")
+    @PostMapping("/sendEmail")
     public String sendEmail(@RequestParam("username") String username,
                             @RequestParam("email") String email,
                             @RequestParam("message") String message,
@@ -37,7 +37,7 @@ public class EmailController {
             model.addAttribute("message", "Ошибка отправки сообщения email.");
             e.printStackTrace();
         }
-        return "email-page.html";
+        return "email-page";
     }
 }
 

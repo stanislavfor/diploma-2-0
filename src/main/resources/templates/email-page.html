@@ -104,7 +104,7 @@
         </div>
         <div class="form-block">
             <h2>Отправьте сообщение</h2>
-            <form action="/sendEmail" method="post">
+            <form th:action="@{/sendEmail}" method="post">
                 <label for="username">Ваше Имя:</label>
                 <input type="text" id="username" name="username" required>
 
